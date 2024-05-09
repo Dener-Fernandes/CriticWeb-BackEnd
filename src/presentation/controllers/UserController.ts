@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { IUser as IRequest } from "../interfaces/IUser";
-import { CreateUserUseCase } from "../useCases/CreateUserUseCase";
-import { errorHandler } from "../errors/errorHandler";
+import { IUser as IRequest } from "../../domain/interfaces/IUser";
+import { CreateUserUseCase } from "../../domain/useCases/CreateUserUseCase";
+import { errorHandler } from "../../domain/errors/errorHandler";
 
 class UserController {
   public async createUser(

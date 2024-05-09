@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString, Length } from "class-validator";
-import { IUser } from "../interfaces/IUser";
-import { IConstraintError } from "../utils/extractConstraintErrors";
+import { IUser } from "../../domain/interfaces/IUser";
+import { IConstraintError } from "../../utils/extractConstraintErrors";
 
 class CreateUserValidator {
   @IsNotEmpty({ message: "Field name cannot be empty." })
