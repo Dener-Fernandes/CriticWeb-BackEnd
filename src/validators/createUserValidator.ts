@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString, Length } from "class-validator";
 import { IUser } from "../interfaces/IUser";
-import { ConstraintError } from "../utils/extractConstraintErrors";
+import { IConstraintError } from "../utils/extractConstraintErrors";
 
 class CreateUserValidator {
   @IsNotEmpty({ message: "Field name cannot be empty." })
@@ -38,10 +38,10 @@ class CreateUserValidator {
     this.confirmPassword = data.confirmPassword!;
   }
 
-  validatePasswordsMatch(): ConstraintError | null {
+  validatePasswordsMatch(): IConstraintError | null {
     if (this.password !== this.confirmPassword) {
       return {
-        error: "Invalid field confirmPassword. It must be equal to password.",
+        message: "Invalid field confirmPassword. It must be equal to password.",
       };
     }
 

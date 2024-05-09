@@ -1,18 +1,20 @@
 import { ValidationError } from "class-validator";
 
-interface ConstraintError {
-  error: string;
+interface IConstraintError {
+  message: string;
 }
 
-function extractConstraintErrors(errors: ValidationError[]): ConstraintError[] {
-  const constraintErrors: ConstraintError[] = [];
+function extractConstraintErrors(
+  errors: ValidationError[],
+): IConstraintError[] {
+  const constraintErrors: IConstraintError[] = [];
 
   errors.forEach((obj) => {
     const { constraints } = obj;
     if (constraints) {
       const errorKeys = Object.keys(constraints);
       errorKeys.forEach((key) => {
-        constraintErrors.push({ error: constraints[key] });
+        constraintErrors.push({ message: constraints[key] });
       });
     }
   });
@@ -20,4 +22,4 @@ function extractConstraintErrors(errors: ValidationError[]): ConstraintError[] {
   return constraintErrors;
 }
 
-export { extractConstraintErrors, ConstraintError };
+export { extractConstraintErrors, IConstraintError };

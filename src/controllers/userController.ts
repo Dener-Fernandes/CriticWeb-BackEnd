@@ -1,16 +1,28 @@
 import { Request, Response } from "express";
-import { IUser as IUserDTO } from "../interfaces/IUser";
+import { IUser as IRequest } from "../interfaces/IUser";
+import { CreateUserUseCase } from "../useCases/CreateUserUseCase";
+import { errorHandler } from "../errors/errorHandler";
 
 class UserController {
   public async createUser(
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { name, email, password, confirmPassword }: IUserDTO = request.body;
+    try {
+      const { name, email, password }: IRequest = request.body;
 
-    console.log(name, email, password, confirmPassword);
+      const createUserUseCase = new CreateUserUseCase();
 
-    return response.status(201).send();
+      await createUserUseCase.execute({ name, email, password });
+
+      return response.status(201).send();
+    } catch (error) {
+      const errorCaptured = errorHandler(error as string);
+
+      return response
+        .status(errorCaptured.status)
+        .json({ message: errorCaptured.message });
+    }
   }
 }
 
