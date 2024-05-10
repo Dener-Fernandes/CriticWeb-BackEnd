@@ -3,7 +3,7 @@ import { Errors } from "../errors/errors";
 import { IUser } from "../interfaces/IUser";
 import bcryptjs from "bcryptjs";
 
-class CreateUserUseCase {
+class RegisterUserUseCase {
   constructor(private userRepository: IUserRepository) {}
 
   public async execute({ name, email, password }: IUser): Promise<void> {
@@ -21,4 +21,4 @@ class CreateUserUseCase {
   }
 }
 
-export { CreateUserUseCase };
+export { RegisterUserUseCase };
