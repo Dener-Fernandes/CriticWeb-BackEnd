@@ -1,0 +1,207 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "CriticWeb BackEnd",
+    "description": "Documentação das APIs do subsistema backend CriticWeb.",
+    "version": "1.0.0"
+  },
+  "basePath": "/criticweb",
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/authenticate/register": {
+      "post": {
+        "summary": "Cadastra usuário",
+        "description": "Cadastra um usuário com base em nome, email e senha fornecidos. Retorna token JWT no header da resposta, dentro de Authorization.",
+        "tags": ["Autenticação"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "register",
+            "description": "Dados que devem ser enviados na requisição",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "confirmPassword": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successfull registration"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "The data provided is not valid to create an account."
+                },
+                {
+                  "message": "Invalid field name. It must be a string."
+                },
+                {
+                  "message": "Invalid field name. It must be at least 8 characters and at most 20."
+                },
+                {
+                  "message": "Field name cannot be empty."
+                },
+                {
+                  "message": "Invalid field email. It must be a valid email."
+                },
+                {
+                  "message": "Field email cannot be empty."
+                },
+                {
+                  "message": "Invalid field password. It must be a string"
+                },
+                {
+                  "message": "Invalid field password. It must be at least 8 characters and at most 20."
+                },
+                {
+                  "message": "Field password cannot be empty."
+                },
+                {
+                  "message": "Invalid field confirmPassword. It must be a string"
+                },
+                {
+                  "message": "Invalid field confirmPassword. It must be at least 8 characters and at most 20."
+                },
+                {
+                  "message": "Field confirmPassword cannot be empty."
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authenticate/login": {
+      "post": {
+        "summary": "Autentica usuário",
+        "description": "Autentica um usuário com base no email e na senha fornecidos. Retorna token JWT no header da resposta, dentro de Authorization.",
+        "tags": ["Autenticação"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "login",
+            "description": "Dados que devem ser enviados na requisição",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successfull login."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "Email or password incorrect."
+                },
+                {
+                  "message": "Invalid field email. It must be a valid email."
+                },
+                {
+                  "message": "Field email cannot be empty."
+                },
+                {
+                  "message": "Field password cannot be empty."
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
