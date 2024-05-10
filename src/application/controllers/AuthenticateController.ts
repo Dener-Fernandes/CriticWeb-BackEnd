@@ -2,16 +2,13 @@ import { Request, Response } from "express";
 import { IUser as IRequest } from "../../domain/interfaces/IUser";
 import { RegisterUserUseCase } from "../../domain/useCases/RegisterUserUseCase";
 import { errorHandler } from "../../domain/errors/errorHandler";
-import { UserRepository } from "../../data/repositories/userRepositories/UserRepository";
+import { UserRepository } from "../../data/repositories/implementations/UserRepository";
 import { dataSource } from "../../data/config/dataSource";
 import { User } from "../../data/entities/User";
 import { AuthenticateUserUseCase } from "../../domain/useCases/AuthenticateUserUseCase";
 
 class AuthenticateController {
-  public async register(
-    request: Request,
-    response: Response,
-  ): Promise<Response> {
+  async register(request: Request, response: Response): Promise<Response> {
     try {
       const { name, email, password }: IRequest = request.body;
 
@@ -39,7 +36,7 @@ class AuthenticateController {
     }
   }
 
-  public async login(request: Request, response: Response): Promise<Response> {
+  async login(request: Request, response: Response): Promise<Response> {
     try {
       const { email, password }: IRequest = request.body;
 
