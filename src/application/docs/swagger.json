@@ -17,7 +17,7 @@
         "parameters": [
           {
             "in": "body",
-            "name": "register",
+            "name": "body",
             "description": "Dados que devem ser enviados na requisição",
             "required": true,
             "schema": {
@@ -129,7 +129,7 @@
         "parameters": [
           {
             "in": "body",
-            "name": "login",
+            "name": "body",
             "description": "Dados que devem ser enviados na requisição",
             "required": true,
             "schema": {
@@ -184,6 +184,145 @@
                 },
                 {
                   "message": "Field password cannot be empty."
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movie": {
+      "post": {
+        "summary": "Cadastra um filme",
+        "description": "Cadastra um novo filme no sistema.",
+        "tags": ["Filme"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Token Bearer",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Dados que devem ser enviados na requisição",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "Invalid field title. It must be a string."
+                },
+                {
+                  "message": "Invalid field title. It must be at least 3 characters and at most 20."
+                },
+                {
+                  "message": "Field title cannot be empty."
+                },
+                {
+                  "message": "Invalid field category. It must be a string."
+                },
+                {
+                  "message": "Invalid field category. It must be at least 3 characters and at most 50."
+                },
+                {
+                  "message": "Field category cannot be empty."
+                },
+                {
+                  "message": "Invalid field image. It must be a string."
+                },
+                {
+                  "message": "Invalid field image. It must be at least 5 characters and at most 200."
+                },
+                {
+                  "message": "Field image cannot be empty."
+                },
+                {
+                  "message": "Invalid field description. It must be a string."
+                },
+                {
+                  "message": "Invalid field description. It must be at least 10 characters and at most 500."
+                },
+                {
+                  "message": "Field description cannot be empty."
+                },
+                {
+                  "message": "Invalid field category. It must contain only allowed categories: 'Ação', 'Aventura', 'Comédia', 'Drama', 'Ficção Científica', 'Terror', 'Romance', 'Animação', 'Documentário', 'Fantasia'."
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "Token missing."
+                },
+                {
+                  "message": "Invalid token."
                 }
               ]
             }
