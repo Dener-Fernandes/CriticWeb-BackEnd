@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { IUser as IRequest } from "../../domain/interfaces/IUser";
 import { CreateUserUseCase } from "../../domain/useCases/CreateUserUseCase";
 import { errorHandler } from "../../domain/errors/errorHandler";
-import { UserRepositoryCommand } from "../../data/repositories/userRepositories/UserRepositoryCommand";
+import { UserRepository } from "../../data/repositories/userRepositories/UserRepository";
 import { dataSource } from "../../data/config/dataSource";
 import { User } from "../../data/entities/User";
+import { AuthenticateUserUseCase } from "../../domain/useCases/AuthenticateUserUseCase";
 
 class UserController {
   public async createUser(
@@ -14,17 +15,19 @@ class UserController {
     try {
       const { name, email, password }: IRequest = request.body;
 
-      const userRepository = new UserRepositoryCommand(
-        dataSource.getRepository(User),
-      );
-      // console.log("USER", dataSource.getRepository(User))
+      const userRepository = new UserRepository(dataSource.getRepository(User));
+
       const createUserUseCase = new CreateUserUseCase(userRepository);
+      const authenticateUserUseCase = new AuthenticateUserUseCase(
+        userRepository,
+      );
 
       await createUserUseCase.execute({ name, email, password });
 
-      return response.status(201).send();
+      const token = await authenticateUserUseCase.execute(email, password);
+
+      return response.status(201).json({ token: token });
     } catch (error) {
-      console.log(error);
       const errorCaptured = errorHandler(error as string);
 
       return response

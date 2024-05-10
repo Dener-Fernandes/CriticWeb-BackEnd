@@ -1,5 +1,8 @@
 import { IUser } from "../../domain/interfaces/IUser";
 
-export interface IUserRepositoryCommand {
-  createUser(user: IUser): Promise<void>;
+interface IUserRepository {
+  create(user: IUser): Promise<void>;
+  findByEmail(email: string): Promise<IUser | null>;
 }
+
+export { IUserRepository };

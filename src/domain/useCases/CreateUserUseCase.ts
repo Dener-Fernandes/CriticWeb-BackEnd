@@ -1,11 +1,21 @@
-import { IUserRepositoryCommand } from "../../data/repositories/IUserRepository";
+import { IUserRepository } from "../../data/repositories/IUserRepository";
+import { Errors } from "../errors/errors";
 import { IUser } from "../interfaces/IUser";
+import bcryptjs from "bcryptjs";
 
 class CreateUserUseCase {
-  constructor(private userRepository: IUserRepositoryCommand) {}
+  constructor(private userRepository: IUserRepository) {}
 
   public async execute({ name, email, password }: IUser): Promise<void> {
-    await this.userRepository.createUser({ name, email, password });
+    const userAlreadyExists = await this.userRepository.findByEmail(email);
+
+    if (userAlreadyExists) {
+      throw Errors.INVALID_USER_DATA;
+    }
+
+    password = await bcryptjs.hash(password, 12);
+
+    await this.userRepository.create({ name, email, password });
 
     return;
   }

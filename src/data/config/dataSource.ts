@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import "dotenv/config";
 
-export const dataSource = new DataSource({
+const dataSource = new DataSource({
   type: process.env.TYPEORM_TYPE as "postgres",
   host: process.env.TYPEORM_HOST,
   port: Number(process.env.TYPEORM_PORT),
@@ -22,3 +22,5 @@ dataSource
     console.log("Connected to database");
   })
   .catch((error) => console.log(error));
+
+export { dataSource };
