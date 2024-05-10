@@ -17,7 +17,7 @@ This application was developed using Node.js, an open-source JavaScript runtime 
    - You need to have Postgres installed on your machine. The graphical interface can be of your preference DBeaver, PgAdmin. Create a database and a schema, the names must be the same as defined in the `.env` file.
   
 5. Run migrations:
-   - Run the migrations to create the database entities. Use the command: `npm run typeorm`.
+   - Run migrations to create the database entities. Use the command: `npm run typeorm`.
 
 6. Run the application:
    - `npm run start:dev`.
