@@ -6,7 +6,7 @@ import bcryptjs from "bcryptjs";
 class RegisterUserUseCase {
   constructor(private userRepository: IUserRepository) {}
 
-  public async execute({ name, email, password }: IUser): Promise<void> {
+  async execute({ name, email, password }: IUser): Promise<void> {
     const userAlreadyExists = await this.userRepository.findByEmail(email);
 
     if (userAlreadyExists) {
