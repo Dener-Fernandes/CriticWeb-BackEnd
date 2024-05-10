@@ -1,23 +1,23 @@
 # CriticWeb BackEnd
 
-Esta aplicação foi desenvolvida utilizando Node.js, um ambiente de tempo de execução JavaScript de código aberto que é amplamente utilizado para construir aplicativos de rede escaláveis.
+This application was developed using Node.js, an open-source JavaScript runtime environment widely used to build scalable network applications.
 
-## Instalação
+## Installation
 
-1. Clone o repositório:
+1. Clone the repository:
    - `git clone https://github.com/Dener-Fernandes/CriticWeb-BackEnd.git`.
 
-2. Instale as dependências:
+2. Install dependencies:
    - `npm install`.
 
-3. Adicione as variáveis de ambiente:
-   - É necessário criar um arquivo `.env` seguindo o formato do arquivo `.env.example`. Adicione as informações de acordo com os nomes das variáveis.
+3. Add environment variables:
+   - Create a `.env` file following the format of the `.env.example` file. Add the information according to the variable names.
 
-4. Criar banco de dados:
-   - É necessário ter o Postgres instalado na sua máquina. A interface gráfica pode ser de sua preferência DBeaver, PgAdmin. Crie um banco e um schema, os nomes devem ser os mesmos definidos no arquivo `.env`.
+4. Create a database:
+   - You need to have Postgres installed on your machine. The graphical interface can be of your preference DBeaver, PgAdmin. Create a database and a schema, the names must be the same as defined in the `.env` file.
   
-5. Executar as migrations:
-   - É necessário executar as migrations para que as entidades do banco de dados sejam criadas. Utilize o comando: `npm run typeorm`.
+5. Run migrations:
+   - Run the migrations to create the database entities. Use the command: `npm run typeorm`.
 
-6. Rodar a aplicação.
+6. Run the application:
    - `npm run start:dev`.
