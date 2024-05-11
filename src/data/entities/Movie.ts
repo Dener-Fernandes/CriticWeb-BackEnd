@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Review } from "./Review";
 
 @Entity()
 class Movie {
@@ -16,6 +17,10 @@ class Movie {
 
   @Column()
   description: string;
+
+  // Relacionamento com Review (Um Movie tem muitas Reviews)
+  @OneToMany(() => Review, (review) => review.movie)
+  reviews: Review[];
 }
 
 export { Movie };
