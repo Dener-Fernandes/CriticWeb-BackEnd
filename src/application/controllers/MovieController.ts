@@ -10,7 +10,8 @@ import { errorHandler } from "../../domain/errors/errorHandler";
 class MovieController {
   async createMovie(request: IRequest, response: Response) {
     try {
-      const { title, category, image, description }: IMovie = request.body;
+      const { title, category, image, description, year }: IMovie =
+        request.body;
 
       const movieRepository = new MovieRepository(
         dataSource.getRepository(Movie),
@@ -18,7 +19,13 @@ class MovieController {
 
       const createMovieUseCase = new CreateMovieUseCase(movieRepository);
 
-      await createMovieUseCase.execute({ title, category, image, description });
+      await createMovieUseCase.execute({
+        title,
+        category,
+        image,
+        description,
+        year,
+      });
 
       return response.status(201).send();
     } catch (error) {

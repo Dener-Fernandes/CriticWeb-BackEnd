@@ -7,7 +7,7 @@ export class CreateTableUser1715291832057 implements MigrationInterface {
         name: "user",
         columns: [
           {
-            name: "id",
+            name: "user_id",
             type: "int",
             isPrimary: true,
             isGenerated: true,

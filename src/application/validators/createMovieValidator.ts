@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length } from "class-validator";
+import { IsInt, IsNotEmpty, IsString, Length, Max, Min } from "class-validator";
 import { IMovie } from "../../domain/interfaces/IMovie";
 
 class createMovieValidator {
@@ -36,18 +36,27 @@ class createMovieValidator {
   @IsString({ message: "Invalid field description. It must be a string." })
   description: string;
 
+  @IsNotEmpty({ message: "Field year cannot be empty." })
+  @IsInt({ message: "Invalid field year. It must be a number." })
+  @Min(1888, { message: "Field year must be no less than 1888." })
+  @Max(new Date().getFullYear(), {
+    message: `Field year must be no greater than the current year (${new Date().getFullYear()}).`,
+  })
+  year: number;
+
   constructor(data: IMovie) {
     (this.title = data.title),
       (this.category = data.category),
       (this.image = data.image),
       (this.description = data.description);
+    this.year = data.year;
 
     this.movieCategories = [
       "Ação",
       "Aventura",
       "Comédia",
       "Drama",
-      "Ficção Científica",
+      "FicçãoCientífica",
       "Terror",
       "Romance",
       "Animação",
