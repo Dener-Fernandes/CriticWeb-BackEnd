@@ -102,6 +102,9 @@
                 },
                 {
                   "message": "Field confirmPassword cannot be empty."
+                },
+                {
+                  "message": "Invalid field confirmPassword. It must be equal to password."
                 }
               ]
             }
@@ -482,6 +485,24 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Qauntidade de itens a serem pulados",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Qauntidade limite de itens a serem retornados",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
           }
         ],
         "responses": {
@@ -537,6 +558,42 @@
                   }
                 }
               }
+            }
+          },
+          "400": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "Invalid field offset. It must be no greater than 250."
+                },
+                {
+                  "message": "Invalid fiield offset. It must be no less than 1."
+                },
+                {
+                  "message": "Invalid field offset. It must be a number."
+                },
+                {
+                  "message": "Invalid field limit. It must be no greater than 250."
+                },
+                {
+                  "message": "Invalid field limit. It must be no less than 1."
+                },
+                {
+                  "message": "Invalid field limit. It must be a number."
+                }
+              ]
             }
           },
           "401": {
