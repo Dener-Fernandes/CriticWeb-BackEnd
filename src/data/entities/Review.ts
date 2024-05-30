@@ -10,8 +10,8 @@ import { Movie } from "./Movie";
 
 @Entity()
 class Review {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({ name: "review_id" })
+  reviewId: number;
 
   @Column()
   description: string;
@@ -19,14 +19,23 @@ class Review {
   @Column()
   rating: number;
 
+  @Column({ name: "is_liked" })
+  isLiked: boolean;
+
+  @Column({ name: "user_id" })
+  userId: number;
+
+  @Column({ name: "movie_id" })
+  movieId: number;
+
   // Relacionamento com User (Muitas reviews pertencem a um User)
   @ManyToOne(() => User, (user) => user.reviews)
-  @JoinColumn({ name: "id", referencedColumnName: "id" }) // Especifica a coluna de junção para o relacionamento com User
+  @JoinColumn({ name: "user_id" }) // Especifica a coluna de junção para o relacionamento com User
   user: User;
 
   // Relacionamento com Movie (Muitas reviews pertencem a um Movie)
   @ManyToOne(() => Movie, (movie) => movie.reviews)
-  @JoinColumn({ name: "id", referencedColumnName: "id" }) // Especifica a coluna de junção para o relacionamento com Movie
+  @JoinColumn({ name: "movie_id" }) // Especifica a coluna de junção para o relacionamento com Movie
   movie: Movie;
 }
 

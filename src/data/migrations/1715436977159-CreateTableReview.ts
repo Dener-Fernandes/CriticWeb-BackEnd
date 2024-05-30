@@ -12,7 +12,7 @@ export class CreateTableReview1715436977159 implements MigrationInterface {
         name: "review",
         columns: [
           {
-            name: "id",
+            name: "review_id",
             type: "int",
             isPrimary: true,
             isGenerated: true,
@@ -27,11 +27,15 @@ export class CreateTableReview1715436977159 implements MigrationInterface {
             type: "float",
           },
           {
-            name: "fk_user_id",
+            name: "is_liked",
+            type: "boolean",
+          },
+          {
+            name: "user_id",
             type: "int",
           },
           {
-            name: "fk_movie_id",
+            name: "movie_id",
             type: "int",
           },
         ],
@@ -42,14 +46,16 @@ export class CreateTableReview1715436977159 implements MigrationInterface {
     // Adicionando as chaves estrangeiras
     await queryRunner.createForeignKeys("review", [
       new TableForeignKey({
-        columnNames: ["fk_user_id"],
-        referencedColumnNames: ["id"],
+        name: "fk_user_id",
+        columnNames: ["user_id"],
+        referencedColumnNames: ["user_id"],
         referencedTableName: "user",
         onDelete: "CASCADE",
       }),
       new TableForeignKey({
-        columnNames: ["fk_movie_id"],
-        referencedColumnNames: ["id"],
+        name: "fk_movie_id",
+        columnNames: ["movie_id"],
+        referencedColumnNames: ["movie_id"],
         referencedTableName: "movie",
         onDelete: "CASCADE",
       }),

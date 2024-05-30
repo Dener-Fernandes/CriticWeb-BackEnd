@@ -8,7 +8,7 @@ async function movieValidate(
   response: Response,
   next: NextFunction,
 ) {
-  const { title, category, image, description }: IMovie = request.body;
+  const { title, category, image, description, year }: IMovie = request.body;
 
   const validateData = new ValidateData();
 
@@ -17,6 +17,7 @@ async function movieValidate(
     category,
     image,
     description,
+    year,
   });
 
   const errors = await validateData.validate(movieValidator);

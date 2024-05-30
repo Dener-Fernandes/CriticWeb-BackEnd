@@ -1,9 +1,10 @@
 interface IMovie {
-  id?: number;
+  movieId?: number;
   title: string;
   category: string;
   image: string;
   description: string;
+  year: number;
 }
 
 export { IMovie };

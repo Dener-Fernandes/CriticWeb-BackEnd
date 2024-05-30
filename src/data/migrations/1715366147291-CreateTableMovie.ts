@@ -7,7 +7,7 @@ export class CreateTableMovie1715366147291 implements MigrationInterface {
         name: "movie",
         columns: [
           {
-            name: "id",
+            name: "movie_id",
             type: "int",
             isPrimary: true,
             isGenerated: true,
@@ -28,6 +28,10 @@ export class CreateTableMovie1715366147291 implements MigrationInterface {
           {
             name: "description",
             type: "text",
+          },
+          {
+            name: "year",
+            type: "int",
           },
         ],
       }),

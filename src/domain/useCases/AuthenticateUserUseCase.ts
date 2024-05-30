@@ -23,7 +23,7 @@ class AuthenticateUserUseCase {
     }
 
     const token = sign({}, secret_token, {
-      subject: user.id.toString(),
+      subject: user.userId.toString(),
       expiresIn: expires_in_token,
     });
 

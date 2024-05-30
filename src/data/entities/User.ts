@@ -3,8 +3,8 @@ import { Review } from "./Review";
 
 @Entity()
 class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({ name: "user_id" })
+  userId: number;
 
   @Column()
   name: string;
