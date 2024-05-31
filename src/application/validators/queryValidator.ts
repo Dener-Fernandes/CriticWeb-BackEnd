@@ -1,7 +1,7 @@
 import { IsOptional, IsInt, Min, Max } from "class-validator";
 import { IQueryData } from "../../domain/interfaces/IQueryData";
 
-class ListReviewValidator {
+class QueryValidator {
   @IsOptional()
   @IsInt({ message: "Invalid field offset. It must be a number." })
   @Min(1, { message: "Invalid fiield offset. It must be no less than 1." })
@@ -22,4 +22,4 @@ class ListReviewValidator {
   }
 }
 
-export { ListReviewValidator };
+export { QueryValidator };

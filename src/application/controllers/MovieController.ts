@@ -6,6 +6,10 @@ import { Movie } from "../../data/entities/Movie";
 import { CreateMovieUseCase } from "../../domain/useCases/CreateMovieUseCase";
 import { IRequest } from "../middlewares/ensureUserIsAuthenticated";
 import { errorHandler } from "../../domain/errors/errorHandler";
+import { ListAllMoviesUseCase } from "../../domain/useCases/ListAllMoviesUseCase";
+import { IQueryData as IQueryDataDTO } from "../../domain/interfaces/IQueryData";
+import { FindMovieAndItsReviews } from "../../domain/useCases/FindMovieAndItsReviews";
+import { IReviewWithStringIds } from "../../domain/interfaces/IReview";
 
 class MovieController {
   async createMovie(request: IRequest, response: Response) {
@@ -29,6 +33,54 @@ class MovieController {
 
       return response.status(201).send();
     } catch (error) {
+      const errorCaptured = errorHandler(error as string);
+
+      return response
+        .status(errorCaptured.status)
+        .json({ message: errorCaptured.message });
+    }
+  }
+
+  async listAllMovies(request: IRequest, response: Response) {
+    try {
+      const { offset, limit }: IQueryDataDTO = request.query;
+
+      const movieRepository = new MovieRepository(
+        dataSource.getRepository(Movie),
+      );
+
+      const listAllMoviesUseCase = new ListAllMoviesUseCase(movieRepository);
+
+      const movies = await listAllMoviesUseCase.execute(offset, limit);
+
+      return response.status(200).json(movies);
+    } catch (error) {
+      console.log(error);
+      const errorCaptured = errorHandler(error as string);
+
+      return response
+        .status(errorCaptured.status)
+        .json({ message: errorCaptured.message });
+    }
+  }
+
+  async findMovieAndItsReviews(request: IRequest, response: Response) {
+    try {
+      const { movieId }: IReviewWithStringIds = request.params;
+
+      const movieRepository = new MovieRepository(
+        dataSource.getRepository(Movie),
+      );
+
+      const findMovieAndItsReviews = new FindMovieAndItsReviews(
+        movieRepository,
+      );
+
+      const movie = await findMovieAndItsReviews.execute(Number(movieId));
+
+      return response.status(200).json(movie);
+    } catch (error) {
+      console.log(error);
       const errorCaptured = errorHandler(error as string);
 
       return response

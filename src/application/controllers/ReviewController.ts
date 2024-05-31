@@ -11,6 +11,8 @@ import { CreateReviewUseCase } from "../../domain/useCases/CreateReviewUseCase";
 import { errorHandler } from "../../domain/errors/errorHandler";
 import { ListAllReviewsUseCase } from "../../domain/useCases/ListAllReviewsUseCase";
 import { IQueryData as IQueryDataDTO } from "../../domain/interfaces/IQueryData";
+import { MovieRepository } from "../../data/repositories/implementations/MovieRepository";
+import { Movie } from "../../data/entities/Movie";
 
 class ReviewController {
   async createReview(request: IRequest, response: Response) {
@@ -21,11 +23,18 @@ class ReviewController {
 
       isLiked = isLiked ? true : false;
 
+      const movieRepository = new MovieRepository(
+        dataSource.getRepository(Movie),
+      );
+
       const reviewRepository = new ReviewRepository(
         dataSource.getRepository(Review),
       );
 
-      const createReviewUseCase = new CreateReviewUseCase(reviewRepository);
+      const createReviewUseCase = new CreateReviewUseCase(
+        reviewRepository,
+        movieRepository,
+      );
 
       await createReviewUseCase.execute({
         description,
@@ -65,7 +74,6 @@ class ReviewController {
 
       return response.status(200).json(reviews);
     } catch (error) {
-      console.log(error);
       const errorCaptured = errorHandler(error as string);
 
       return response

@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { ValidateData } from "../validators";
 import { IQueryData as IQueryDataDTO } from "../../domain/interfaces/IQueryData";
-import { ListReviewValidator } from "../validators/listReviewValidator";
+import { QueryValidator } from "../validators/queryValidator";
 
-async function listReviewValidate(
+async function queryValidate(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -12,12 +12,12 @@ async function listReviewValidate(
 
   const validateData = new ValidateData();
 
-  const listReviewValidator = new ListReviewValidator({
+  const queryValidator = new QueryValidator({
     offset: offset ? Number(offset) : undefined,
     limit: limit ? Number(limit) : undefined,
   });
 
-  const errors = await validateData.validate(listReviewValidator);
+  const errors = await validateData.validate(queryValidator);
 
   if (errors.length > 0) {
     return response.status(400).json(errors);
@@ -26,4 +26,4 @@ async function listReviewValidate(
   next();
 }
 
-export { listReviewValidate };
+export { queryValidate };
