@@ -5,7 +5,7 @@ import { IMovie } from "../interfaces/IMovie";
 class FindMovieAndItsReviews {
   constructor(private movieRepository: IMovieRepository) {}
 
-  async execute(id: number): Promise<Partial<IMovie> | null> {
+  async execute(id: number): Promise<Partial<IMovie>> {
     const movie = await this.movieRepository.findMovieAndItsReviewsById(id);
 
     if (!movie) {

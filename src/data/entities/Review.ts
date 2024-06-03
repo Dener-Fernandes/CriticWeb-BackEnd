@@ -16,7 +16,7 @@ class Review {
   @Column()
   description: string;
 
-  @Column()
+  @Column("float")
   rating: number;
 
   @Column({ name: "is_liked" })

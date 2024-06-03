@@ -2,7 +2,7 @@ import { Response } from "express";
 import { IRequest } from "../middlewares/ensureUserIsAuthenticated";
 import {
   IReview as IReviewDTO,
-  IReviewWithStringIds,
+  IReviewAndMovieIds,
 } from "../../domain/interfaces/IReview";
 import { ReviewRepository } from "../../data/repositories/implementations/ReviewRepository";
 import { Review } from "../../data/entities/Review";
@@ -18,7 +18,7 @@ class ReviewController {
   async createReview(request: IRequest, response: Response) {
     try {
       let { description, rating, isLiked }: IReviewDTO = request.body;
-      const { movieId }: IReviewWithStringIds = request.params;
+      const { movieId }: IReviewAndMovieIds = request.params;
       const { userId } = request.user;
 
       isLiked = isLiked ? true : false;

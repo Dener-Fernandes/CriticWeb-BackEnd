@@ -357,6 +357,24 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Qauntidade de itens a serem pulados",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Qauntidade limite de itens a serem retornados",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
           }
         ],
         "responses": {
@@ -544,6 +562,30 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "Invalid field movieId. It must be a number."
+                },
+                {
+                  "message": "Field movieId must be no less than 1."
+                }
+              ]
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "schema": {
@@ -566,6 +608,18 @@
                   "message": "Invalid token."
                 }
               ]
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No movie found."
+                }
+              }
             }
           },
           "500": {
@@ -658,16 +712,22 @@
                   "message": "Field description cannot be empty."
                 },
                 {
-                  "message": "Invalid field rating. It must be a float with two decimal places."
+                  "message": "Invalid field rating. It must be a float with one decimal place."
                 },
                 {
                   "message": "Field rating cannot be empty."
                 },
                 {
-                  "message": "Field movieId must be no less than 1."
+                  "message": "Invalid field rating. It must be no less than 0."
+                },
+                {
+                  "message": "Invalid field rating. It must be no greater than 10."
                 },
                 {
                   "message": "Invalid field movieId. It must be a number."
+                },
+                {
+                  "message": "Invalid field movieId. It must be no less than 1."
                 }
               ]
             }
@@ -694,6 +754,18 @@
                   "message": "Invalid token."
                 }
               ]
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No movie found."
+                }
+              }
             }
           },
           "500": {

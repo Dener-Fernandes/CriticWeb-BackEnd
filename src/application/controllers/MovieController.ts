@@ -9,7 +9,7 @@ import { errorHandler } from "../../domain/errors/errorHandler";
 import { ListAllMoviesUseCase } from "../../domain/useCases/ListAllMoviesUseCase";
 import { IQueryData as IQueryDataDTO } from "../../domain/interfaces/IQueryData";
 import { FindMovieAndItsReviews } from "../../domain/useCases/FindMovieAndItsReviews";
-import { IReviewWithStringIds } from "../../domain/interfaces/IReview";
+import { IReviewAndMovieIds } from "../../domain/interfaces/IReview";
 
 class MovieController {
   async createMovie(request: IRequest, response: Response) {
@@ -55,7 +55,6 @@ class MovieController {
 
       return response.status(200).json(movies);
     } catch (error) {
-      console.log(error);
       const errorCaptured = errorHandler(error as string);
 
       return response
@@ -66,7 +65,7 @@ class MovieController {
 
   async findMovieAndItsReviews(request: IRequest, response: Response) {
     try {
-      const { movieId }: IReviewWithStringIds = request.params;
+      const { movieId }: IReviewAndMovieIds = request.params;
 
       const movieRepository = new MovieRepository(
         dataSource.getRepository(Movie),
@@ -80,7 +79,6 @@ class MovieController {
 
       return response.status(200).json(movie);
     } catch (error) {
-      console.log(error);
       const errorCaptured = errorHandler(error as string);
 
       return response
