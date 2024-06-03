@@ -7,8 +7,9 @@ interface IReview {
   movieId?: number;
 }
 
-interface IReviewWithStringIds {
+interface IReviewAndMovieIds {
   movieId?: string;
+  reviewId?: string;
 }
 
-export { IReview, IReviewWithStringIds };
+export { IReview, IReviewAndMovieIds };

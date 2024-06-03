@@ -343,6 +343,298 @@
             }
           }
         }
+      },
+      "get": {
+        "summary": "Lista os filmes",
+        "description": "Lista todos os filmes cadastrados no sistema.",
+        "tags": ["Movie"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Token Bearer",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Qauntidade de itens a serem pulados",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Qauntidade limite de itens a serem retornados",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "totalItems": {
+                  "type": "integer"
+                },
+                "currentPage": {
+                  "type": "integer"
+                },
+                "limit": {
+                  "type": "integer"
+                },
+                "totalPages": {
+                  "type": "integer"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "image": {
+                        "type": "string"
+                      },
+                      "year": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "Invalid field offset. It must be no greater than 250."
+                },
+                {
+                  "message": "Invalid fiield offset. It must be no less than 1."
+                },
+                {
+                  "message": "Invalid field offset. It must be a number."
+                },
+                {
+                  "message": "Invalid field limit. It must be no greater than 250."
+                },
+                {
+                  "message": "Invalid field limit. It must be no less than 1."
+                },
+                {
+                  "message": "Invalid field limit. It must be a number."
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "Token missing."
+                },
+                {
+                  "message": "Invalid token."
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movie/{movieId}": {
+      "get": {
+        "summary": "Busca um filme com base no seu id",
+        "description": "Busca um filme com base no id e o retorna junto com suas críticas se for encontrado.",
+        "tags": ["Movie"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Token Bearer",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "movieId",
+            "description": "Id do filme",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "movieId": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "year": {
+                  "type": "integer"
+                },
+                "reviews": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "description": {
+                        "type": "string"
+                      },
+                      "isLiked": {
+                        "type": "boolean"
+                      },
+                      "rating": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "rating": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "Invalid field movieId. It must be a number."
+                },
+                {
+                  "message": "Field movieId must be no less than 1."
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "message": "Token missing."
+                },
+                {
+                  "message": "Invalid token."
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No movie found."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error."
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/review": {
@@ -420,16 +712,22 @@
                   "message": "Field description cannot be empty."
                 },
                 {
-                  "message": "Invalid field rating. It must be a float with two decimal places."
+                  "message": "Invalid field rating. It must be a float with one decimal place."
                 },
                 {
                   "message": "Field rating cannot be empty."
                 },
                 {
-                  "message": "Field movieId must be no less than 1."
+                  "message": "Invalid field rating. It must be no less than 0."
+                },
+                {
+                  "message": "Invalid field rating. It must be no greater than 10."
                 },
                 {
                   "message": "Invalid field movieId. It must be a number."
+                },
+                {
+                  "message": "Invalid field movieId. It must be no less than 1."
                 }
               ]
             }
@@ -456,6 +754,18 @@
                   "message": "Invalid token."
                 }
               ]
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No movie found."
+                }
+              }
             }
           },
           "500": {
@@ -561,7 +871,7 @@
             }
           },
           "400": {
-            "description": "Unauthorized",
+            "description": "Bad Request",
             "schema": {
               "type": "array",
               "items": {

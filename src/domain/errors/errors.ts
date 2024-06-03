@@ -7,6 +7,7 @@ interface IErrorsDescription {
 enum Errors {
   INVALID_USER_DATA = "INVALID_USER_DATA",
   INVALID_EMAIL_OR_PASSWORD = "INVALID_EMAIL_OR_PASSWORD",
+  NO_MOVIE_FOUND = "NO_MOVIE_FOUND",
 }
 
 const errorsDescription: IErrorsDescription[] = [
@@ -19,6 +20,11 @@ const errorsDescription: IErrorsDescription[] = [
     title: "INVALID_EMAIL_OR_PASSWORD",
     status: 400,
     message: "Email or password incorrect.",
+  },
+  {
+    title: "NO_MOVIE_FOUND",
+    status: 404,
+    message: "No movie found.",
   },
   {
     title: "INTERNAL_SERVER_ERROR",

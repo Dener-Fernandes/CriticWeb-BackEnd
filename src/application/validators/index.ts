@@ -1,5 +1,5 @@
 import { validate } from "class-validator";
-import { extractConstraintErrors } from "../../utils/extractConstraintErrors";
+import { extractConstraintErrors } from "../utils/extractConstraintErrors";
 
 class ValidateData {
   public async validate(classForValidaton: object) {

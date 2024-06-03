@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import {
   IReview as IReviewDTO,
-  IReviewWithStringIds,
+  IReviewAndMovieIds,
 } from "../../domain/interfaces/IReview";
 import { CreateReviewValidator } from "../validators/createReviewValidator";
 import { ValidateData } from "../validators";
@@ -12,7 +12,7 @@ async function reviewValidate(
   next: NextFunction,
 ) {
   let { description, rating, isLiked }: IReviewDTO = request.body;
-  const { movieId }: IReviewWithStringIds = request.params;
+  const { movieId }: IReviewAndMovieIds = request.params;
 
   const validateData = new ValidateData();
 
