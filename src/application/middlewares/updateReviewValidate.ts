@@ -6,23 +6,24 @@ import {
 import { CreateReviewValidator } from "../validators/createReviewValidator";
 import { ValidateData } from "../validators";
 
-async function reviewValidate(
+async function updateReviewValidate(
   request: Request,
   response: Response,
   next: NextFunction,
 ) {
-  let { description, rating, isLiked }: IReviewDTO = request.body;
-  const { movieId }: IReviewWithStringIds = request.params;
-  const {reviewId} = request.params;
+  const { description, rating, isLiked }: IReviewDTO = request.body;
+  const { reviewId } = request.params;
+
+  if (!Number(reviewId)) {
+    return response.status(400).json({ message: "Invalid review ID" });
+  }
+
   const validateData = new ValidateData();
 
   const reviewValidator = new CreateReviewValidator({
     description,
     rating,
     isLiked,
-    movieId: Number(movieId),
-    reviewId: Number(reviewId),
-  
   });
 
   const errors = await validateData.validate(reviewValidator);
@@ -34,4 +35,4 @@ async function reviewValidate(
   next();
 }
 
-export { reviewValidate };
+export { updateReviewValidate };
