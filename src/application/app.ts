@@ -1,6 +1,8 @@
 import express from "express";
 import { routes } from "./routes";
 
+import cors from "cors";
+
 import "reflect-metadata";
 
 import swaggerUI from "swagger-ui-express";
@@ -11,6 +13,8 @@ import dotenv from "dotenv";
 const app = express();
 
 dotenv.config({ path: "./.env" });
+
+app.use(cors());
 
 app.use(express.json());
 
