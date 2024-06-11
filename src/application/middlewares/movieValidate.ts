@@ -25,7 +25,7 @@ async function movieValidate(
 
   if (!isCategoryInvalid) {
     errors.push({
-      message: `Invalid field category. It must contain only allowed categories: 'Ação', 'Aventura', 'Comédia', 'Drama', 'Ficção Científica', 'Terror', 'Romance', 'Animação', 'Documentário', 'Fantasia'.`,
+      message: `Invalid field category. It must contain only allowed categories: 'Ação', 'Aventura', 'Comédia', 'Drama', 'Ficção Científica', 'Terror', 'Romance', 'Animação', 'Documentário', 'Fantasia'. If there is more than one value, they must be separated by comma without blank: Romance,Drama.`,
     });
   }
 
