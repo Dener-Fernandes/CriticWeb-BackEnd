@@ -77,7 +77,7 @@ class ReviewController {
         userId: Number(userId),
       });
 
-      return response.status(200).send();
+      return response.status(204).send();
     } catch (error) {
       const errorCaptured = errorHandler(error as string);
 
