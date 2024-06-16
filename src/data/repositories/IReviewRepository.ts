@@ -10,6 +10,10 @@ interface IReviewRepository {
     totalItems: number;
     reviews: IReview[];
   }>;
+
+  update(review: IReview): Promise<void>;
+
+  findReviewById(reviewId: number): Promise<IReview | null>;
 }
 
 export { IReviewRepository };

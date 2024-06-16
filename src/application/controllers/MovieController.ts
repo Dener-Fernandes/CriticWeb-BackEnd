@@ -8,8 +8,8 @@ import { IRequest } from "../middlewares/ensureUserIsAuthenticated";
 import { errorHandler } from "../../domain/errors/errorHandler";
 import { ListAllMoviesUseCase } from "../../domain/useCases/ListAllMoviesUseCase";
 import { IQueryData as IQueryDataDTO } from "../../domain/interfaces/IQueryData";
-import { FindMovieAndItsReviews } from "../../domain/useCases/FindMovieAndItsReviews";
 import { IReviewAndMovieIds } from "../../domain/interfaces/IReview";
+import { FindMovieAndItsReviewsUseCase } from "../../domain/useCases/FindMovieAndItsReviewsUseCase";
 
 class MovieController {
   async createMovie(request: IRequest, response: Response) {
@@ -71,7 +71,7 @@ class MovieController {
         dataSource.getRepository(Movie),
       );
 
-      const findMovieAndItsReviews = new FindMovieAndItsReviews(
+      const findMovieAndItsReviews = new FindMovieAndItsReviewsUseCase(
         movieRepository,
       );
 
