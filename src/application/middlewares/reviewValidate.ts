@@ -3,7 +3,7 @@ import {
   IReview as IReviewDTO,
   IReviewAndMovieIds,
 } from "../../domain/interfaces/IReview";
-import { CreateReviewValidator } from "../validators/createReviewValidator";
+import { ReviewDataValidator } from "../validators/reviewDataValidator";
 import { ValidateData } from "../validators";
 
 async function reviewValidate(
@@ -16,11 +16,14 @@ async function reviewValidate(
 
   const validateData = new ValidateData();
 
-  const reviewValidator = new CreateReviewValidator({
+  // This is a fake id to pass validation when validating data to update a review. It will not bet set after validation is completed, in this case.
+  const fakeMovieId = 1;
+
+  const reviewValidator = new ReviewDataValidator({
     description,
     rating,
     isLiked,
-    movieId: Number(movieId),
+    movieId: movieId ? Number(movieId) : fakeMovieId,
   });
 
   const errors = await validateData.validate(reviewValidator);

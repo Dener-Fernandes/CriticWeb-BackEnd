@@ -2,7 +2,7 @@ import { IMovieRepository } from "../../data/repositories/IMovieRepository";
 import { Errors } from "../errors/errors";
 import { IMovie } from "../interfaces/IMovie";
 
-class FindMovieAndItsReviews {
+class FindMovieAndItsReviewsUseCase {
   constructor(private movieRepository: IMovieRepository) {}
 
   async execute(id: number): Promise<Partial<IMovie>> {
@@ -37,4 +37,4 @@ class FindMovieAndItsReviews {
   }
 }
 
-export { FindMovieAndItsReviews };
+export { FindMovieAndItsReviewsUseCase };

@@ -39,7 +39,7 @@ class ReviewRepository implements IReviewRepository {
         "review.reviewId",
         "review.description",
         "review.rating",
-        "review.is_liked",
+        "review.isLiked",
         "movie.title",
         "movie.image",
         "movie.description",
@@ -54,6 +54,18 @@ class ReviewRepository implements IReviewRepository {
       totalItems,
       reviews,
     };
+  }
+
+  async findReviewById(reviewId: number): Promise<IReview | null> {
+    const review = await this.reviewRepository.findOne({ where: { reviewId } });
+
+    if (!review) return null;
+
+    return review;
+  }
+
+  async update(review: IReview): Promise<void> {
+    await this.reviewRepository.save(review);
   }
 }
 
