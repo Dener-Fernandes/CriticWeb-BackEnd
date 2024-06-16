@@ -1,4 +1,4 @@
-import { Repository, createQueryBuilder } from "typeorm";
+import { Repository } from "typeorm";
 import { IReview } from "../../../domain/interfaces/IReview";
 import { Review } from "../../entities/Review";
 import { IReviewRepository } from "../IReviewRepository";
@@ -57,30 +57,30 @@ class ReviewRepository implements IReviewRepository {
   }
 
   async delete(reviewId: number): Promise<void> {
-    await this.reviewRepository.delete(reviewId);
+    await this.reviewRepository.delete({ reviewId });
     return;
   }
 
-  async update(
-    reviewId: number,
-    updatedData: { description?: string; rating?: number; isLiked?: boolean },
-  ): Promise<{ updatedReview: IReview; message: string | null }> {
-    const updatedReview = await this.reviewRepository.save(review);
+  async findReview(title: string): Promise<IReview | null> {
+    const review = await this.reviewRepository
+      .createQueryBuilder("review")
+      .leftJoinAndSelect("review.movie", "movie")
+      .where("movie.title = :title", { title })
+      .getOne();
 
-    return { updatedReview, message: "Crítica Atualizada com sucesso!! " };
-  }
-  async findReviewById(reviewId: number): Promise<IReview | null> {
-    const review = await this.reviewRepository.findOne({ where: { reviewId } });
     if (!review) return null;
 
-    return {
-      review: {
-        description: review.description,
-        rating: review.rating,
-        isLiked: review.isLiked,
-        userId: review.userId,
-      },
-    };
+    return review;
+  }
+
+  async findReviewById(reviewId: number): Promise<IReview | null> {
+    const review = await this.reviewRepository.findOne({
+      where: { reviewId },
+    });
+
+    if (!review) return null;
+
+    return review;
   }
 }
 

@@ -1,9 +1,8 @@
 import { Response } from "express";
 import { IRequest } from "../middlewares/ensureUserIsAuthenticated";
 import {
-  IReview,
   IReview as IReviewDTO,
-  IReviewWithStringIds,
+  IReviewAndMovieIds,
 } from "../../domain/interfaces/IReview";
 import { ReviewRepository } from "../../data/repositories/implementations/ReviewRepository";
 import { Review } from "../../data/entities/Review";
@@ -14,23 +13,31 @@ import { ListAllReviewsUseCase } from "../../domain/useCases/ListAllReviewsUseCa
 import { IQueryData as IQueryDataDTO } from "../../domain/interfaces/IQueryData";
 import { DeleteReviewsUseCase } from "../../domain/useCases/DeleteReviewsUseCase";
 
-import { UpdateReviewUseCase } from "../../domain/useCases/UpdateReviewUseCase";
 import { FindReviewUseCase } from "../../domain/useCases/FindReviewUseCase";
+import { MovieRepository } from "../../data/repositories/implementations/MovieRepository";
+import { Movie } from "../../data/entities/Movie";
 
 class ReviewController {
   async createReview(request: IRequest, response: Response) {
     try {
       let { description, rating, isLiked }: IReviewDTO = request.body;
-      const { movieId }: IReviewWithStringIds = request.params;
+      const { movieId }: IReviewAndMovieIds = request.params;
       const { userId } = request.user;
 
       isLiked = isLiked ? true : false;
+
+      const movieRepository = new MovieRepository(
+        dataSource.getRepository(Movie),
+      );
 
       const reviewRepository = new ReviewRepository(
         dataSource.getRepository(Review),
       );
 
-      const createReviewUseCase = new CreateReviewUseCase(reviewRepository);
+      const createReviewUseCase = new CreateReviewUseCase(
+        reviewRepository,
+        movieRepository,
+      );
 
       await createReviewUseCase.execute({
         description,
@@ -70,7 +77,6 @@ class ReviewController {
 
       return response.status(200).json(reviews);
     } catch (error) {
-      console.log(error);
       const errorCaptured = errorHandler(error as string);
 
       return response
@@ -80,37 +86,16 @@ class ReviewController {
   }
   async deleteReview(request: IRequest, response: Response) {
     try {
-      const { reviewId } = request.params;
+      const { reviewId }: IReviewAndMovieIds = request.params;
       const { userId } = request.user;
       const reviewRepository = new ReviewRepository(
         dataSource.getRepository(Review),
       );
 
       const deleteReviewUseCase = new DeleteReviewsUseCase(reviewRepository);
-      await deleteReviewUseCase.execute(reviewId, userId);
+      await deleteReviewUseCase.execute(Number(reviewId), Number(userId));
+
       return response.status(204).send();
-    } catch (error) {
-      const errorCaptured = errorHandler(error as string);
-      return response
-        .status(errorCaptured.status)
-        .json({ message: errorCaptured.message });
-    }
-  }
-
-  async UpdateReview(request: IRequest, response: Response) {
-    try {
-      const reviewRepository = new ReviewRepository(
-        dataSource.getRepository(Review),
-      );
-
-      const { reviewId } = request.params;
-      const updatedData: Partial<IReview> = request.body;
-
-      const updateReviewUseCase = new UpdateReviewUseCase(reviewRepository);
-      const { updatedReview, message } = await updateReviewUseCase.execute(
-        Number(reviewId),
-        updatedData,
-      );
     } catch (error) {
       const errorCaptured = errorHandler(error as string);
       return response
@@ -124,20 +109,18 @@ class ReviewController {
       const reviewRepository = new ReviewRepository(
         dataSource.getRepository(Review),
       );
+      const { title } = request.params;
 
-      const { review_id } = request.params;
       const findReviewUseCase = new FindReviewUseCase(reviewRepository);
+      const review = await findReviewUseCase.execute(String(title));
 
-      const result = await findReviewUseCase.execute(parseInt(review_id));
-
-      if (result.review) {
-        return response.status(200).json(result.review);
-      } else {
-        return response.status(404).json({ message: "Review not found" });
-      }
+      return response.status(200).json(review);
     } catch (error) {
-      console.error("Error finding review:", error);
-      return response.status(500).json({ message: "Internal server error" });
+      const errorCaptured = errorHandler(error as string);
+
+      return response
+        .status(errorCaptured.status)
+        .json({ message: errorCaptured.message });
     }
   }
 }

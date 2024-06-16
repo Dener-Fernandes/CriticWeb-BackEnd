@@ -1,6 +1,6 @@
 import { compare } from "bcryptjs";
 import { IUserRepository } from "../../data/repositories/IUserRepository";
-import auth from "../../utils/auth";
+import auth from "../../application/utils/auth";
 import { Errors } from "../errors/errors";
 import { sign } from "jsonwebtoken";
 

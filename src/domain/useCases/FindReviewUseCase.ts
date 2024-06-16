@@ -1,32 +1,18 @@
 import { IReviewRepository } from "../../data/repositories/IReviewRepository";
+import { Errors } from "../errors/errors";
 import { IReview } from "../interfaces/IReview";
 
+class FindReviewUseCase {
+  constructor(private reviewRepository: IReviewRepository) {}
 
+  async execute(title: string): Promise<IReview> {
+    const review = await this.reviewRepository.findReview(title);
 
-
-class FindReviewUseCase{
-
-    constructor(private reviewRepository: IReviewRepository){}
-
-    async execute(
-        reviewId: number,
-    ):Promise<{review: IReview | null}>{
-
-        try{
-           const review = await this.reviewRepository.findReview(reviewId);
-           return review;
-        }catch (error) {
-            console.error("Error finding review:", error);
-            return { review: null }; 
-        }
-
-
-
+    if (!review) {
+      throw Errors.REVIEW_NOT_FOUND;
     }
 
-
-
-
-
+    return review;
+  }
 }
-export {FindReviewUseCase}
+export { FindReviewUseCase };

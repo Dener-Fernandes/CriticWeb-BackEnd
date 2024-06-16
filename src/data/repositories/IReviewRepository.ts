@@ -11,14 +11,11 @@ interface IReviewRepository {
     reviews: IReview[];
   }>;
 
-  update(
-    reviewId: number,
-    updatedData: { description?: string; rating?: number; isLiked?: boolean },
-  ): Promise<{ updatedReview: IReview; message: string | null }>;
-
   delete(reviewId: number): Promise<void>;
 
-  findReviewById(reviewId: number): Promise<{ review: IReview | null }>;
+  findReview(title: string): Promise<IReview | null>;
+
+  findReviewById(reviewId: number): Promise<IReview | null>;
 }
 
 export { IReviewRepository };

@@ -10,7 +10,7 @@ import {
 } from "class-validator";
 import { IReview } from "../../domain/interfaces/IReview";
 
-class CreateReviewValidator {
+class reviewValidator {
   @IsNotEmpty({ message: "Field description cannot be empty." })
   @IsString({ message: "Invalid field title. It must be a string." })
   description: string;
@@ -44,4 +44,4 @@ class CreateReviewValidator {
   }
 }
 
-export { CreateReviewValidator };
+export { reviewValidator };
