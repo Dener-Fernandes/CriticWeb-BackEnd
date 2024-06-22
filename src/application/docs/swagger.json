@@ -271,7 +271,7 @@
                   "message": "Invalid field title. It must be a string."
                 },
                 {
-                  "message": "Invalid field title. It must be at least 3 characters and at most 20."
+                  "message": "Invalid field title. It must be at least 3 characters and at most 50."
                 },
                 {
                   "message": "Field title cannot be empty."

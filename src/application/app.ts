@@ -14,7 +14,14 @@ const app = express();
 
 dotenv.config({ path: "./.env" });
 
-app.use(cors());
+const corsOptions = {
+  origin: process.env.FRONT_END_URL,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["Authorization"],
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
