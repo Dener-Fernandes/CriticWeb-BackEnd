@@ -5,9 +5,9 @@ class createMovieValidator {
   private movieCategories: string[];
 
   @IsNotEmpty({ message: "Field title cannot be empty." })
-  @Length(3, 20, {
+  @Length(3, 50, {
     message:
-      "Invalid field title. It must be at least 3 characters and at most 20.",
+      "Invalid field title. It must be at least 3 characters and at most 50.",
   })
   @IsString({ message: "Invalid field title. It must be a string." })
   title: string;
