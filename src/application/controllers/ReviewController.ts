@@ -93,7 +93,9 @@ class ReviewController {
     try {
       const { offset, limit }: IQueryDataDTO = request.query;
 
-      const { userId } = request.user;
+      let { userId } = request.user;
+
+      let newuserId = Number(userId);
 
       const reviewRepository = new ReviewRepository(
         dataSource.getRepository(Review),
@@ -102,7 +104,7 @@ class ReviewController {
       const listAllReviewsUseCase = new ListAllReviewsUseCase(reviewRepository);
 
       const reviews = await listAllReviewsUseCase.execute(
-        userId,
+        newuserId,
         offset,
         limit,
       );

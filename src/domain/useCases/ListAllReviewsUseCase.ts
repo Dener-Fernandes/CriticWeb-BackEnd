@@ -5,7 +5,7 @@ class ListAllReviewsUseCase {
   constructor(private reviewRepository: IReviewRepository) {}
 
   async execute(
-    userId: string,
+    userId: number,
     offset: number,
     limit: number,
   ): Promise<{
@@ -24,12 +24,29 @@ class ListAllReviewsUseCase {
       limit,
     );
 
+    let reviewsFormatted: IReview[];
+
+    if (reviews && reviews.length > 0) {
+      reviewsFormatted = reviews.map((review) => ({
+        reviewId: review.reviewId,
+        description: review.description,
+        rating: review.rating,
+        isLiked: review.isLiked,
+        reviewer: review.user.name,
+        movie: {
+          title: review.movie.title,
+          category: review.movie.category,
+          image: review.movie.image,
+        },
+      }));
+    }
+
     return {
       totalItems,
       currentPage: Math.floor(offset / limit) + 1,
       limit,
       totalPages: Math.ceil(totalItems / limit),
-      items: reviews,
+      items: reviewsFormatted.length > 0 ? reviewsFormatted : reviews,
     };
   }
 }
