@@ -24,12 +24,26 @@ class FindReviewUseCase {
       limit,
     );
 
+    let reviewsFormatted: IReview[];
+
+    if (reviews && reviews.length > 0) {
+      reviewsFormatted = reviews.map((review: IReview) => {
+        return {
+          reviewId: review.reviewId,
+          description: review.description,
+          rating: review.rating,
+          isLiked: review.isLiked,
+          reviewer: review.user.name,
+        };
+      });
+    }
+
     return {
       totalItems,
       currentPage: Math.floor(offset / limit) + 1,
       limit,
       totalPages: Math.ceil(totalItems / limit),
-      items: reviews,
+      items: reviewsFormatted.length > 0 ? reviewsFormatted : reviews,
     };
   }
 }

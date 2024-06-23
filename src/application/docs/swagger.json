@@ -403,6 +403,9 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "movieId": {
+                        "type": "number"
+                      },
                       "title": {
                         "type": "string"
                       },
@@ -411,6 +414,12 @@
                       },
                       "image": {
                         "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "rating": {
+                        "type": "integer"
                       },
                       "year": {
                         "type": "integer"
@@ -555,6 +564,9 @@
                       },
                       "rating": {
                         "type": "number"
+                      },
+                      "reviewer": {
+                        "type": "string"
                       }
                     }
                   }
@@ -852,6 +864,9 @@
                       "rating": {
                         "type": "number"
                       },
+                      "reviewer": {
+                        "type": "string"
+                      },
                       "movie": {
                         "type": "object",
                         "properties": {
@@ -1027,6 +1042,9 @@
                       },
                       "isLiked": {
                         "type": "boolean"
+                      },
+                      "reviewer": {
+                        "type": "string"
                       }
                     }
                   }

@@ -25,30 +25,19 @@ class ReviewRepository implements IReviewRepository {
   }
 
   async listAll(
-    userId: string,
+    userId: number,
     offset: number,
     limit: number,
   ): Promise<{
     totalItems: number;
     reviews: IReview[];
   }> {
-    const [reviews, totalItems] = await this.reviewRepository
-      .createQueryBuilder("review")
-      .leftJoinAndSelect("review.movie", "movie")
-      .select([
-        "review.reviewId",
-        "review.description",
-        "review.rating",
-        "review.isLiked",
-        "movie.title",
-        "movie.image",
-        "movie.description",
-        "movie.year",
-      ])
-      .where("review.user_id = :userId", { userId })
-      .skip(offset)
-      .take(limit)
-      .getManyAndCount();
+    const [reviews, totalItems] = await this.reviewRepository.findAndCount({
+      where: { userId },
+      relations: ["movie", "user"], // Inclui as relações com movie e user
+      skip: offset,
+      take: limit,
+    });
 
     return {
       totalItems,
@@ -60,28 +49,24 @@ class ReviewRepository implements IReviewRepository {
     title: string,
     offset: number,
     limit: number,
-  ): Promise<{
-    totalItems: number;
-    reviews: IReview[];
-  }> {
+  ): Promise<{ totalItems: number; reviews: IReview[] }> {
     const [reviews, totalItems] = await this.reviewRepository
       .createQueryBuilder("review")
       .leftJoinAndSelect("review.movie", "movie")
+      .leftJoinAndSelect("review.user", "user") // Join com a entidade User
       .select([
         "review.reviewId",
         "review.description",
         "review.rating",
         "review.isLiked",
+        "user.name", // Seleciona o nome do usuário da review
       ])
       .where("movie.title = :title", { title })
       .skip(offset)
       .take(limit)
       .getManyAndCount();
-
-    return {
-      totalItems,
-      reviews,
-    };
+    console.log(reviews);
+    return { totalItems, reviews };
   }
 
   async findReviewById(reviewId: number): Promise<IReview | null> {

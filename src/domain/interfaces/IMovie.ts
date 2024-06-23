@@ -9,6 +9,7 @@ interface IMovie {
   rating?: number;
   year: number;
   reviews?: IReview[];
+  name?: string;
 }
 
 export { IMovie };

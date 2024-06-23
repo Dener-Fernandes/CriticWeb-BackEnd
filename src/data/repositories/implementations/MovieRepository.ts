@@ -23,13 +23,12 @@ class MovieRepository implements IMovieRepository {
   }
 
   async findMovieAndItsReviewsById(id: number): Promise<Partial<IMovie>> {
-    const movie = await this.movieRepository.findOne({
-      where: {
-        movieId: id,
-      },
-      relations: ["reviews"],
-      select: ["movieId", "title", "category", "image", "year"],
-    });
+    const movie = await this.movieRepository
+      .createQueryBuilder("movie")
+      .where("movie.movieId = :id", { id })
+      .leftJoinAndSelect("movie.reviews", "review")
+      .leftJoinAndSelect("review.user", "user")
+      .getOne();
 
     if (!movie) return null;
 
