@@ -5,7 +5,7 @@ class ListAllReviewsUseCase {
   constructor(private reviewRepository: IReviewRepository) {}
 
   async execute(
-    userId: number,
+    userId: number | null,
     offset: number,
     limit: number,
   ): Promise<{

@@ -92,10 +92,11 @@ class ReviewController {
   async listAllReviews(request: IRequest, response: Response) {
     try {
       const { offset, limit }: IQueryDataDTO = request.query;
+      let userId = null;
 
-      let { userId } = request.user;
+      const path = request.url;
 
-      let newuserId = Number(userId);
+      if (path == "/user-profile") userId = Number(request.user.userId);
 
       const reviewRepository = new ReviewRepository(
         dataSource.getRepository(Review),
@@ -104,7 +105,7 @@ class ReviewController {
       const listAllReviewsUseCase = new ListAllReviewsUseCase(reviewRepository);
 
       const reviews = await listAllReviewsUseCase.execute(
-        newuserId,
+        userId,
         offset,
         limit,
       );

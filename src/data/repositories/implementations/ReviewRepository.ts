@@ -25,16 +25,18 @@ class ReviewRepository implements IReviewRepository {
   }
 
   async listAll(
-    userId: number,
+    userId: number | null,
     offset: number,
     limit: number,
   ): Promise<{
     totalItems: number;
     reviews: IReview[];
   }> {
+    const whereCondition = userId ? { userId } : {};
+
     const [reviews, totalItems] = await this.reviewRepository.findAndCount({
-      where: { userId },
-      relations: ["movie", "user"], // Inclui as relações com movie e user
+      where: whereCondition,
+      relations: ["movie", "user"],
       skip: offset,
       take: limit,
     });

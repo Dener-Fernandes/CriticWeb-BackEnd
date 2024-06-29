@@ -9,6 +9,11 @@ const reviewController = new ReviewController();
 
 reviewRoutes.post("/:movieId", reviewValidate, reviewController.createReview);
 reviewRoutes.get("/", queryValidate, reviewController.listAllReviews);
+reviewRoutes.get(
+  "/user-profile",
+  queryValidate,
+  reviewController.listAllReviews,
+);
 reviewRoutes.get("/:title", reviewController.findReview);
 reviewRoutes.put(
   "/:reviewId",
