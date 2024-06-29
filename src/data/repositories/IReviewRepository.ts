@@ -3,7 +3,7 @@ import { IReview } from "../../domain/interfaces/IReview";
 interface IReviewRepository {
   create(review: IReview): Promise<void>;
   listAll(
-    userId: number,
+    userId: number | null,
     offset: number,
     limit: number,
   ): Promise<{
