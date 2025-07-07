@@ -1,2 +1,8 @@
+# compiled output
 node_modules
+
+# dotenv environment variable files
 .env
+
+# Docker
+docker-compose.yml
