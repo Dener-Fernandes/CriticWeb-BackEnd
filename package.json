@@ -7,7 +7,11 @@
     "start:dev": "tsnd --respawn --transpile-only --ignore-watch node_modules ./src/application/server.ts",
     "typeorm:create-entity": "cd ./src/data/entities && npx typeorm entity:create",
     "typeorm:create-migration": "cd ./src/data/migrations && npx typeorm migration:create",
-    "typeorm": "npx typeorm-ts-node-commonjs migration:run --dataSource ./src/data/config/dataSource.ts"
+    "typeorm": "npx typeorm-ts-node-commonjs migration:run --dataSource ./src/data/config/dataSource.ts",
+    "lint": "ng lint",
+    "test": "ng test",
+    "build": "ng build"
+
   },
   "keywords": [],
   "author": "",
