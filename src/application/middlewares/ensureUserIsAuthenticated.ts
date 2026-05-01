@@ -33,7 +33,7 @@ async function ensureUserIsAuthenticated(
     };
 
     return next();
-  } catch (error) {
+  } catch (_error) {
     return response.status(401).json({ message: "Invalid token." });
   }
 }

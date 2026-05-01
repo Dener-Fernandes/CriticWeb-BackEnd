@@ -45,10 +45,10 @@ class createMovieValidator {
   year: number;
 
   constructor(data: IMovie) {
-    (this.title = data.title),
-      (this.category = data.category),
-      (this.image = data.image),
-      (this.description = data.description);
+    this.title = data.title;
+    this.category = data.category;
+    this.image = data.image;
+    this.description = data.description;
     this.year = data.year;
 
     this.movieCategories = [
