@@ -17,8 +17,8 @@ class QueryValidator {
   limit: number;
 
   constructor(data: IQueryData) {
-    this.offset = data.offset;
-    this.limit = data.limit;
+    this.offset = data.offset!;
+    this.limit = data.limit!;
   }
 }
 

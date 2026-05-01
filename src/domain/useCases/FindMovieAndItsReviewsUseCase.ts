@@ -17,7 +17,7 @@ class FindMovieAndItsReviewsUseCase {
         description: review.description,
         isLiked: review.isLiked,
         rating: review.rating,
-        reviewer: review.user.name,
+        reviewer: review.user!.name,
       }));
     }
 

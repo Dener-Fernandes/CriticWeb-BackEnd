@@ -51,7 +51,7 @@ class MovieController {
 
       const listAllMoviesUseCase = new ListAllMoviesUseCase(movieRepository);
 
-      const movies = await listAllMoviesUseCase.execute(offset, limit);
+      const movies = await listAllMoviesUseCase.execute(offset!, limit!);
 
       return response.status(200).json(movies);
     } catch (error) {

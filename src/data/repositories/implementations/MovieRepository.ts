@@ -10,7 +10,7 @@ class MovieRepository implements IMovieRepository {
     await this.movieRepository.save(movie);
   }
 
-  async findById(id: number): Promise<IMovie> {
+  async findById(id: number): Promise<IMovie | null> {
     const movie = await this.movieRepository.findOne({
       where: {
         movieId: id,
@@ -22,7 +22,9 @@ class MovieRepository implements IMovieRepository {
     return movie;
   }
 
-  async findMovieAndItsReviewsById(id: number): Promise<Partial<IMovie>> {
+  async findMovieAndItsReviewsById(
+    id: number,
+  ): Promise<Partial<IMovie> | null> {
     const movie = await this.movieRepository
       .createQueryBuilder("movie")
       .where("movie.movieId = :id", { id })

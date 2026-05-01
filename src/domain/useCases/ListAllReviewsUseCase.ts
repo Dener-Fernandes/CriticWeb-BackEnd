@@ -32,11 +32,11 @@ class ListAllReviewsUseCase {
         description: review.description,
         rating: review.rating,
         isLiked: review.isLiked,
-        reviewer: review.user.name,
+        reviewer: review.user!.name,
         movie: {
-          title: review.movie.title,
-          category: review.movie.category,
-          image: review.movie.image,
+          title: review.movie!.title,
+          category: review.movie!.category,
+          image: review.movie!.image,
         },
       }));
     }
@@ -46,7 +46,7 @@ class ListAllReviewsUseCase {
       currentPage: Math.floor(offset / limit) + 1,
       limit,
       totalPages: Math.ceil(totalItems / limit),
-      items: reviewsFormatted.length > 0 ? reviewsFormatted : reviews,
+      items: reviewsFormatted!.length > 0 ? reviewsFormatted! : reviews,
     };
   }
 }

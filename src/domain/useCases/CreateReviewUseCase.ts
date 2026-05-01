@@ -11,7 +11,7 @@ class CreateReviewUseCase {
 
   async execute(review: IReview): Promise<void> {
     const istMovieNotFound = await this.movieRepository.findById(
-      review.movieId,
+      review.movieId!,
     );
 
     if (!istMovieNotFound) {

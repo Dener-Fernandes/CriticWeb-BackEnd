@@ -2,7 +2,7 @@ import { compare } from "bcryptjs";
 import { IUserRepository } from "../../data/repositories/IUserRepository";
 import auth from "../../application/utils/auth";
 import { Errors } from "../errors/errors";
-import { sign } from "jsonwebtoken";
+import { Secret, sign } from "jsonwebtoken";
 
 class AuthenticateUserUseCase {
   constructor(private userRepository: IUserRepository) {}
@@ -10,7 +10,7 @@ class AuthenticateUserUseCase {
   async execute(email: string, password: string): Promise<string> {
     const user = await this.userRepository.findByEmail(email);
 
-    const { secret_token, expires_in_token } = auth;
+    const { secret_token } = auth;
 
     if (!user) {
       throw Errors.INVALID_EMAIL_OR_PASSWORD;
@@ -22,9 +22,8 @@ class AuthenticateUserUseCase {
       throw Errors.INVALID_EMAIL_OR_PASSWORD;
     }
 
-    const token = sign({}, secret_token, {
-      subject: user.userId.toString(),
-      expiresIn: expires_in_token,
+    const token = sign({}, secret_token as Secret, {
+      subject: String(user.userId),
     });
 
     return token;

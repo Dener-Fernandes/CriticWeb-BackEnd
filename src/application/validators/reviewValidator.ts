@@ -40,7 +40,7 @@ class reviewValidator {
     this.description = data.description;
     this.rating = data.rating;
     this.isLiked = data.isLiked;
-    this.movieId = data.movieId;
+    this.movieId = data.movieId!;
   }
 }
 

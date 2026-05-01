@@ -7,7 +7,7 @@ class UpdateReviewUseCase {
 
   async execute(review: IReview): Promise<void> {
     const isReviewFound = await this.reviewRepository.findReviewById(
-      review.reviewId,
+      review.reviewId!,
     );
 
     if (!isReviewFound) {

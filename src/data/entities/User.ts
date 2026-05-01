@@ -4,20 +4,20 @@ import { Review } from "./Review";
 @Entity()
 class User {
   @PrimaryGeneratedColumn({ name: "user_id" })
-  userId: number;
+  userId!: number;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column()
-  email: string;
+  email!: string;
 
   @Column()
-  password: string;
+  password!: string;
 
   // Relacionamento com Review (Um User tem muitas Reviews)
   @OneToMany(() => Review, (review) => review.user)
-  reviews: Review[];
+  reviews!: Review[];
 }
 
 export { User };

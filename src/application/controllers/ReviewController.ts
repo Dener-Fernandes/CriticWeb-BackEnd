@@ -22,7 +22,7 @@ class ReviewController {
     try {
       let { description, rating, isLiked }: IReviewDTO = request.body;
       const { movieId }: IReviewAndMovieIds = request.params;
-      const { userId } = request.user;
+      const { userId } = request.user!;
 
       isLiked = isLiked ? true : false;
 
@@ -61,7 +61,7 @@ class ReviewController {
     try {
       let { description, rating, isLiked }: IReviewDTO = request.body;
       const { reviewId }: IReviewAndMovieIds = request.params;
-      const { userId } = request.user;
+      const { userId } = request.user!;
 
       isLiked = isLiked ? true : false;
 
@@ -96,7 +96,7 @@ class ReviewController {
 
       const path = request.url;
 
-      if (path == "/user-profile") userId = Number(request.user.userId);
+      if (path == "/user-profile") userId = Number(request.user!.userId);
 
       const reviewRepository = new ReviewRepository(
         dataSource.getRepository(Review),
@@ -106,8 +106,8 @@ class ReviewController {
 
       const reviews = await listAllReviewsUseCase.execute(
         userId,
-        offset,
-        limit,
+        offset!,
+        limit!,
       );
 
       return response.status(200).json(reviews);
@@ -122,7 +122,7 @@ class ReviewController {
   async deleteReview(request: IRequest, response: Response) {
     try {
       const { reviewId }: IReviewAndMovieIds = request.params;
-      const { userId } = request.user;
+      const { userId } = request.user!;
       const reviewRepository = new ReviewRepository(
         dataSource.getRepository(Review),
       );
@@ -150,8 +150,8 @@ class ReviewController {
       const findReviewUseCase = new FindReviewUseCase(reviewRepository);
       const reviews = await findReviewUseCase.execute(
         String(title),
-        offset,
-        limit,
+        offset!,
+        limit!,
       );
 
       return response.status(200).json(reviews);

@@ -4,26 +4,26 @@ import { Review } from "./Review";
 @Entity()
 class Movie {
   @PrimaryGeneratedColumn({ name: "movie_id" })
-  movieId: number;
+  movieId!: number;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column()
-  category: string;
+  category!: string;
 
   @Column()
-  image: string;
+  image!: string;
 
   @Column()
-  description: string;
+  description!: string;
 
   @Column()
-  year: number;
+  year!: number;
 
   // Relacionamento com Review (Um Movie tem muitas Reviews)
   @OneToMany(() => Review, (review) => review.movie)
-  reviews: Review[];
+  reviews!: Review[];
 }
 
 export { Movie };
