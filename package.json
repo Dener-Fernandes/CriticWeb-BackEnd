@@ -8,9 +8,9 @@
     "typeorm:create-entity": "cd ./src/data/entities && npx typeorm entity:create",
     "typeorm:create-migration": "cd ./src/data/migrations && npx typeorm migration:create",
     "typeorm": "npx typeorm-ts-node-commonjs migration:run --dataSource ./src/data/config/dataSource.ts",
-    "lint": "ng lint",
-    "test": "ng test",
-    "build": "ng build"
+    "lint": "npx eslint .",
+    "build": "npx tsc",
+    "test": "echo \"no tests yet\""
 
   },
   "keywords": [],
